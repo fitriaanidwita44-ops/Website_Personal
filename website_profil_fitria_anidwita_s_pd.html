@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FITRIA ANIDWITA, S.Pd. - Profile Guru SD Negeri Mojomanis 2</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Config Customizations -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brandRed: {
+                            DEFAULT: '#C8102E',
+                            dark: '#990000',
+                            light: '#E63946',
+                            soft: '#FFF5F5'
+                        },
+                        brandGold: {
+                            DEFAULT: '#D4AF37',
+                            light: '#FFD700',
+                            dark: '#B8860B',
+                            soft: '#FFFDF0'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Glassmorphism Effects */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAFAFA;
+            color: #2D3748;
+            overflow-x: hidden;
+        }
+
+        /* Gold Gradient Text & Elements */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
+        }
+
+        .red-gradient-bg {
+            background: linear-gradient(135deg, #C8102E 0%, #990000 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .glass-card-red {
+            background: rgba(200, 16, 46, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(200, 16, 46, 0.15);
+        }
+
+        /* Floating Background Bubbles Animation */
+        .bubbles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.4), rgba(200, 16, 46, 0.15));
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            animation: floatUp 15s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-120vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Floating & Glowing Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .gold-glow {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Sound Equalizer Animation */
+        .eq-bar {
+            width: 3px;
+            background-color: #D4AF37;
+            animation: equalize 1.2s ease-in-out infinite alternate;
+        }
+
+        .eq-bar:nth-child(1) { height: 12px; animation-delay: -0.4s; }
+        .eq-bar:nth-child(2) { height: 20px; animation-delay: -0.2s; }
+        .eq-bar:nth-child(3) { height: 8px; animation-delay: -0.6s; }
+
+        @keyframes equalize {
+            0% { height: 4px; }
+            100% { height: 22px; }
+        }
+
+        .paused .eq-bar {
+            animation-play-state: paused;
+            height: 4px !important;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Floating Bubbles Background -->
+    <div class="bubbles-container" id="bubblesContainer"></div>
+
+    <!-- Hidden YouTube Player for Backsound -->
+    <div class="hidden">
+        <div id="youtube-player"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-card shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#profil" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-full red-gradient-bg flex items-center justify-center text-white font-bold text-xl shadow-md border-2 border-brandGold group-hover:scale-105 transition-transform">
+                        FA
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg text-gray-900 block leading-tight">Fitria Anidwita</span>
+                        <span class="text-xs text-brandRed font-semibold tracking-wide">Guru Kelas SD</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                    <a href="#profil" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-brandRed hover:bg-brandRed-soft transition-all">Profil</a>
+                    <a href="#pendidikan" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-brandRed hover:bg-brandRed-soft transition-all">Pendidikan</a>
+                    <a href="#bukti-kinerja" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-brandRed hover:bg-brandRed-soft transition-all">Bukti Kinerja</a>
+                    <a href="#prestasi" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-brandRed hover:bg-brandRed-soft transition-all">Prestasi</a>
+                    <a href="#kontak" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-brandRed hover:bg-brandRed-soft transition-all">Kontak</a>
+                </nav>
+
+                <!-- WhatsApp Quick CTA & Mobile Menu Toggle -->
+                <div class="flex items-center gap-3">
+                    <a href="https://wa.me/6281332157553" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-full gold-gradient-bg text-gray-900 font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all hover:scale-105">
+                        <i class="fa-brands fa-whatsapp text-lg text-green-800"></i>
+                        <span>Hubungi</span>
+                    </a>
+                    
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 bg-white px-4 pt-2 pb-4 space-y-2 shadow-lg">
+            <a href="#profil" class="mobile-nav-link block px-3 py-2 rounded-md font-medium text-gray-700 hover:text-brandRed hover:bg-brandRed-soft">Profil</a>
+            <a href="#pendidikan" class="mobile-nav-link block px-3 py-2 rounded-md font-medium text-gray-700 hover:text-brandRed hover:bg-brandRed-soft">Pendidikan</a>
+            <a href="#bukti-kinerja" class="mobile-nav-link block px-3 py-2 rounded-md font-medium text-gray-700 hover:text-brandRed hover:bg-brandRed-soft">Bukti Kinerja</a>
+            <a href="#prestasi" class="mobile-nav-link block px-3 py-2 rounded-md font-medium text-gray-700 hover:text-brandRed hover:bg-brandRed-soft">Prestasi</a>
+            <a href="#kontak" class="mobile-nav-link block px-3 py-2 rounded-md font-medium text-gray-700 hover:text-brandRed hover:bg-brandRed-soft">Kontak</a>
+            <a href="https://wa.me/6281332157553" target="_blank" class="block text-center mt-2 px-4 py-2.5 rounded-full gold-gradient-bg text-gray-900 font-bold text-xs uppercase">
+                <i class="fa-brands fa-whatsapp text-lg mr-1"></i> Hubungi WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+
+        <!-- ================= HERO & PROFIL SECTION ================= -->
+        <section id="profil" class="py-12 md:py-20 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    
+                    <!-- Profile Image Column -->
+                    <div class="lg:col-span-5 flex flex-col items-center">
+                        <div class="relative group">
+                            <!-- Outer Glowing Ring -->
+                            <div class="absolute -inset-1.5 gold-gradient-bg rounded-full blur-md opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+                            
+                            <!-- Profile Picture Holder -->
+                            <div class="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full overflow-hidden border-4 border-white shadow-2xl animate-float">
+                                <img src="https://drive.google.com/thumbnail?id=1GEUI6-XH-mWHTMyYPBepZIFnXSmajP6P&sz=w800" 
+                                     alt="Fitria Anidwita, S.Pd." 
+                                     class="w-full h-full object-cover object-center"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/400x400/990000/FFFFFF?text=Fitria+Anidwita+S.Pd';">
+                            </div>
+
+                            <!-- Experience Badge -->
+                            <div class="absolute -bottom-2 right-2 gold-gradient-bg text-gray-900 px-4 py-2 rounded-full font-extrabold text-xs shadow-lg flex items-center gap-2 border-2 border-white">
+                                <i class="fa-solid fa-award text-sm text-brandRed"></i>
+                                <span>3+ TAHUN PENGALAMAN</span>
+                            </div>
+                        </div>
+
+                        <!-- Social Media Links Row -->
+                        <div class="mt-8 flex items-center gap-3">
+                            <a href="https://youtube.com/@fitriaanidwita?si=H4a-YoPLXq8ntXrD" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-red-600 hover:scale-110 hover:bg-red-600 hover:text-white transition-all">
+                                <i class="fa-brands fa-youtube text-lg"></i>
+                            </a>
+                            <a href="https://www.instagram.com/vitafitriand?xtok=MWZpMWV5anc2NnRtYg%3D%3D&utm_source=qr" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-pink-600 hover:scale-110 hover:bg-pink-600 hover:text-white transition-all">
+                                <i class="fa-brands fa-instagram text-lg"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@bu.fitanidwita" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-900 hover:scale-110 hover:bg-black hover:text-white transition-all">
+                                <i class="fa-brands fa-tiktok text-lg"></i>
+                            </a>
+                            <a href="https://wa.me/6281332157553" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-green-600 hover:scale-110 hover:bg-green-600 hover:text-white transition-all">
+                                <i class="fa-brands fa-whatsapp text-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Intro & Bio Details Column -->
+                    <div class="lg:col-span-7 space-y-6">
+                        
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-md red-gradient-bg text-white font-semibold text-xs tracking-wider uppercase mb-2 shadow-sm">
+                                GURU KELAS SD NEGERI MOJOMANIS 2
+                            </span>
+                            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
+                                Fitria Anidwita, <span class="gold-gradient-text">S.Pd.</span>
+                            </h1>
+                            <p class="text-xs sm:text-sm text-gray-500 mt-1 font-medium">
+                                NIP: 19910414 202321 2 015 &bull; Golongan IX
+                            </p>
+                        </div>
+
+                        <!-- Teaching Philosophy Quote Card -->
+                        <div class="glass-card-red p-5 rounded-2xl border-l-4 border-brandRed">
+                            <i class="fa-solid fa-quote-left text-brandRed text-2xl opacity-40 mb-1 block"></i>
+                            <p class="text-gray-700 italic text-sm sm:text-base leading-relaxed">
+                                "Saya adalah guru yang berkomitmen menciptakan pembelajaran yang bermakna, menyenangkan, dan inovatif melalui pemanfaatan teknologi digital. Saya percaya bahwa setiap murid memiliki potensi yang dapat berkembang apabila diberikan kesempatan belajar yang sesuai dengan kebutuhannya."
+                            </p>
+                        </div>
+
+                        <!-- Data Diri Resmi Grid Card -->
+                        <div class="glass-card p-6 rounded-2xl shadow-sm border border-gold-200">
+                            <h3 class="text-base font-bold text-brandRed flex items-center gap-2 mb-4">
+                                <i class="fa-solid fa-address-card text-brandGold"></i>
+                                <span>INFORMASI BIODATA RESMI</span>
+                            </h3>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+                                <div>
+                                    <span class="text-gray-400 block font-medium">Tempat, Tanggal Lahir</span>
+                                    <span class="font-semibold text-gray-800">Ngawi, 14 April 1991</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400 block font-medium">Jabatan & Pengalaman</span>
+                                    <span class="font-semibold text-gray-800">Guru Kelas (3+ Tahun)</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400 block font-medium">Unit Kerja</span>
+                                    <span class="font-semibold text-gray-800">SD Negeri Mojomanis 2</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400 block font-medium">Alamat Unit Kerja</span>
+                                    <span class="font-semibold text-gray-800">Desa Mojomanis, Kec. Kwadungan, Kab. Ngawi</span>
+                                </div>
+                                <div class="sm:col-span-2 border-t border-gray-100 pt-2 mt-1">
+                                    <span class="text-gray-400 block font-medium">Alamat Tempat Tinggal</span>
+                                    <span class="font-semibold text-gray-800">Jl. Pejajaran No.8 RT.19 RW.06 Kel. Winongo, Kec. Manguharjo, Kota Madiun</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION RIWAYAT PENDIDIKAN ================= -->
+        <section id="pendidikan" class="py-16 bg-white/60 relative">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-brandRed font-bold text-xs uppercase tracking-wider">Rekam Jejak Akademik</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">
+                        Riwayat <span class="gold-gradient-text">Pendidikan</span>
+                    </h2>
+                    <div class="w-16 h-1 gold-gradient-bg mx-auto mt-3 rounded-full"></div>
+                </div>
+
+                <!-- Vertical Interactive Timeline -->
+                <div class="relative border-l-2 border-brandGold/40 ml-4 sm:ml-32 space-y-8 my-8">
+                    
+                    <!-- Timeline Item 1 -->
+                    <div class="relative group pl-6 sm:pl-8">
+                        <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full gold-gradient-bg flex items-center justify-center shadow-md border-2 border-white group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-graduation-cap text-xs text-gray-900"></i>
+                        </div>
+                        <div class="sm:absolute sm:-left-32 sm:top-1 text-xs font-bold text-brandRed bg-brandRed-soft px-3 py-1 rounded-full w-max mb-2 sm:mb-0">
+                            2009 – 2013
+                        </div>
+                        <div class="glass-card p-5 rounded-2xl hover:shadow-md transition-all">
+                            <h3 class="font-bold text-gray-900 text-base">IKIP PGRI Madiun</h3>
+                            <p class="text-sm text-brandRed font-semibold mt-0.5">Program Studi S1 Pendidikan Matematika</p>
+                            <p class="text-xs text-gray-500 mt-2">Menyelesaikan gelar Sarjana Pendidikan dengan fokus penguasaan logika matematika dan metode pedagogi pembelajaran.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="relative group pl-6 sm:pl-8">
+                        <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full red-gradient-bg flex items-center justify-center shadow-md border-2 border-white group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-school text-xs text-white"></i>
+                        </div>
+                        <div class="sm:absolute sm:-left-32 sm:top-1 text-xs font-bold text-brandRed bg-brandRed-soft px-3 py-1 rounded-full w-max mb-2 sm:mb-0">
+                            2006 – 2009
+                        </div>
+                        <div class="glass-card p-5 rounded-2xl hover:shadow-md transition-all">
+                            <h3 class="font-bold text-gray-900 text-base">SMA Negeri 5 Madiun</h3>
+                            <p class="text-sm text-gray-600 font-medium">Jenjang Sekolah Menengah Atas</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="relative group pl-6 sm:pl-8">
+                        <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full red-gradient-bg flex items-center justify-center shadow-md border-2 border-white group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-school text-xs text-white"></i>
+                        </div>
+                        <div class="sm:absolute sm:-left-32 sm:top-1 text-xs font-bold text-brandRed bg-brandRed-soft px-3 py-1 rounded-full w-max mb-2 sm:mb-0">
+                            2003 – 2006
+                        </div>
+                        <div class="glass-card p-5 rounded-2xl hover:shadow-md transition-all">
+                            <h3 class="font-bold text-gray-900 text-base">SMP Negeri 1 Kwadungan</h3>
+                            <p class="text-sm text-gray-600 font-medium">Jenjang Sekolah Menengah Pertama</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 4 -->
+                    <div class="relative group pl-6 sm:pl-8">
+                        <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full red-gradient-bg flex items-center justify-center shadow-md border-2 border-white group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-child-reaching text-xs text-white"></i>
+                        </div>
+                        <div class="sm:absolute sm:-left-32 sm:top-1 text-xs font-bold text-brandRed bg-brandRed-soft px-3 py-1 rounded-full w-max mb-2 sm:mb-0">
+                            1998 – 2003
+                        </div>
+                        <div class="glass-card p-5 rounded-2xl hover:shadow-md transition-all">
+                            <h3 class="font-bold text-gray-900 text-base">SD Negeri Warukkalong 1</h3>
+                            <p class="text-sm text-gray-600 font-medium">Jenjang Sekolah Dasar</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION BUKTI KINERJA ================= -->
+        <section id="bukti-kinerja" class="py-16 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-brandRed font-bold text-xs uppercase tracking-wider">Portofolio Pembelajaran</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">
+                        Bukti <span class="gold-gradient-text">Kinerja Guru</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2">Dokumentasi perangkat pembelajaran, praktik mengajar, dan karya siswa unggulan.</p>
+                    <div class="w-16 h-1 gold-gradient-bg mx-auto mt-3 rounded-full"></div>
+                </div>
+
+                <!-- 3 Interactive Portfolio Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1: RPP & Modul Ajar -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between hover:-translate-y-2 transition-all duration-300 shadow-md hover:shadow-xl group border-t-4 border-t-brandRed">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl red-gradient-bg text-white flex items-center justify-center text-2xl shadow-md mb-5 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-folder-open"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Kumpulan RPP & Modul Ajar</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
+                                Dokumen perencanaan pembelajaran berdiferensiasi dan berbasis teknologi interaktif sesuai kurikulum nasional.
+                            </p>
+                        </div>
+                        <a href="https://drive.google.com/drive/folders/14VRz6Worx18-ZjIU1tNR6xweitV5y4g6?usp=drive_link" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl font-bold text-xs text-white red-gradient-bg shadow-md hover:opacity-95 transition-opacity">
+                            <span>Buka Google Drive</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Card 2: Video Praktik Mengajar -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between hover:-translate-y-2 transition-all duration-300 shadow-md hover:shadow-xl group border-t-4 border-t-brandGold">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl gold-gradient-bg text-gray-900 flex items-center justify-center text-2xl shadow-md mb-5 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-video"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Video Praktik Mengajar</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
+                                Rekaman pelaksanaan pembelajaran interaktif di kelas SD Negeri Mojomanis 2 dengan penerapan metode inovatif.
+                            </p>
+                        </div>
+                        <a href="https://drive.google.com/drive/folders/1aGy1mSpEplIHz7vyGZ6I8H4lswMIaYYm" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl font-bold text-xs text-gray-900 gold-gradient-bg shadow-md hover:opacity-95 transition-opacity">
+                            <span>Lihat Video Praktik</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Card 3: Hasil Karya Siswa -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between hover:-translate-y-2 transition-all duration-300 shadow-md hover:shadow-xl group border-t-4 border-t-red-600">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-red-600 text-white flex items-center justify-center text-2xl shadow-md mb-5 group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-youtube"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Hasil Karya Siswa Menonjol</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
+                                Galeri karya seni, proyek digital, dan kreativitas murid yang berhasil dikembangkan dalam kegiatan pembelajaran.
+                            </p>
+                        </div>
+                        <a href="https://www.youtube.com/watch?si=7REXdN6jVXHpQaGp&v=1srJXIv6Kxw&feature=youtu.be" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl font-bold text-xs text-white bg-red-600 shadow-md hover:bg-red-700 transition-colors">
+                            <span>Tonton di YouTube</span>
+                            <i class="fa-solid fa-play text-xs"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION PRESTASI & DEDIKASI ================= -->
+        <section id="prestasi" class="py-16 bg-white/60 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-brandRed font-bold text-xs uppercase tracking-wider">Apresiasi & Pencapaian</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">
+                        Prestasi & <span class="gold-gradient-text">Dedikasi Guru</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2">Pencapaian dan keikutsertaan aktif dalam pengembangan inovasi pendidikan digital di Kabupaten Ngawi.</p>
+                    <div class="w-16 h-1 gold-gradient-bg mx-auto mt-3 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    
+                    <!-- Achievement Item 1 -->
+                    <div class="glass-card p-6 rounded-2xl border border-gold-200 hover:shadow-xl transition-all flex items-start gap-4 hover:-translate-y-1">
+                        <div class="w-14 h-14 rounded-2xl gold-gradient-bg text-gray-900 flex-shrink-0 flex items-center justify-center text-2xl shadow-md">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <div>
+                            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold red-gradient-bg text-white mb-1">TAHUN 2026</span>
+                            <h3 class="font-bold text-gray-900 text-base sm:text-lg leading-snug">
+                                Best Practice Koding dan Kecerdasan Artifisial Tingkat SD Kabupaten Ngawi
+                            </h3>
+                            <p class="text-xs text-brandRed font-semibold mt-1">Kabupaten Ngawi &bull; Tahun 2026</p>
+                            <p class="text-xs text-gray-600 mt-2 leading-relaxed">
+                                Penghargaan atas penyusunan dan penerapan praktik baik (*best practice*) pembelajaran koding dan *Artificial Intelligence* (AI) bagi siswa Sekolah Dasar.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Achievement Item 2 -->
+                    <div class="glass-card p-6 rounded-2xl border border-gold-200 hover:shadow-xl transition-all flex items-start gap-4 hover:-translate-y-1">
+                        <div class="w-14 h-14 rounded-2xl red-gradient-bg text-white flex-shrink-0 flex items-center justify-center text-2xl shadow-md">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div>
+                            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold gold-gradient-bg text-gray-900 mb-1">TAHUN 2026</span>
+                            <h3 class="font-bold text-gray-900 text-base sm:text-lg leading-snug">
+                                Peserta TOT PGRI POWER Kabupaten Ngawi
+                            </h3>
+                            <p class="text-xs text-brandRed font-semibold mt-1">Kabupaten Ngawi &bull; Tahun 2026</p>
+                            <p class="text-xs text-gray-600 mt-2 leading-relaxed">
+                                Terpilih mengikuti *Training of Trainers* (TOT) PGRI POWER untuk meningkatkan kapasitas serta profesionalisme pendidik berbasis digital.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION KOMUNIKASI / KONTAK ================= -->
+        <section id="kontak" class="py-16 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-brandRed font-bold text-xs uppercase tracking-wider">Koneksi & Silaturahmi</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">
+                        Pusat <span class="gold-gradient-text">Komunikasi</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2">Mari terhubung untuk diskusi edukasi, kolaborasi, atau pertanyaan seputar pembelajaran.</p>
+                    <div class="w-16 h-1 gold-gradient-bg mx-auto mt-3 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- Left Column: Direct Links & Address Card -->
+                    <div class="lg:col-span-5 space-y-6">
+                        
+                        <div class="glass-card p-6 rounded-2xl shadow-sm border border-gold-200">
+                            <h3 class="font-bold text-gray-900 text-base mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane text-brandRed"></i>
+                                <span>SALURAN KOMUNIKASI LANGSUNG</span>
+                            </h3>
+
+                            <div class="space-y-4 text-xs sm:text-sm">
+                                <a href="https://wa.me/6281332157553" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-green-50 hover:bg-green-100 text-green-800 transition-colors">
+                                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                                    <div>
+                                        <span class="font-bold block">WhatsApp Pesan Cepat</span>
+                                        <span class="text-xs text-green-700">081332157553</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://youtube.com/@fitriaanidwita?si=H4a-YoPLXq8ntXrD" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-red-50 hover:bg-red-100 text-red-800 transition-colors">
+                                    <i class="fa-brands fa-youtube text-2xl"></i>
+                                    <div>
+                                        <span class="font-bold block">Channel YouTube</span>
+                                        <span class="text-xs text-red-700">@FitriaAnidwita</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://www.instagram.com/vitafitriand?xtok=MWZpMWV5anc2NnRtYg%3D%3D&utm_source=qr" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-pink-50 hover:bg-pink-100 text-pink-800 transition-colors">
+                                    <i class="fa-brands fa-instagram text-2xl"></i>
+                                    <div>
+                                        <span class="font-bold block">Instagram Resmi</span>
+                                        <span class="text-xs text-pink-700">@vitafitriand</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://www.tiktok.com/@bu.fitanidwita" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-900 transition-colors">
+                                    <i class="fa-brands fa-tiktok text-2xl"></i>
+                                    <div>
+                                        <span class="font-bold block">TikTok Edukasi</span>
+                                        <span class="text-xs text-gray-700">@bu.fitanidwita</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Location Info Card -->
+                        <div class="glass-card p-6 rounded-2xl shadow-sm border border-gold-200">
+                            <h4 class="font-bold text-gray-900 text-xs tracking-wider uppercase mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-location-dot text-brandRed"></i>
+                                <span>LOKASI UNIT KERJA</span>
+                            </h4>
+                            <p class="text-xs sm:text-sm text-gray-700 font-semibold">SD Negeri Mojomanis 2</p>
+                            <p class="text-xs text-gray-500 mt-1 leading-relaxed">
+                                Desa Mojomanis, Kecamatan Kwadungan, Kabupaten Ngawi, Jawa Timur.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column: Interactive Quick Message Form -->
+                    <div class="lg:col-span-7">
+                        <div class="glass-card p-6 sm:p-8 rounded-2xl shadow-md border border-gold-200">
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">Kirim Pesan Pesan Cepat</h3>
+                            <p class="text-xs text-gray-500 mb-6">Isi formulir di bawah ini untuk terhubung secara otomatis via WhatsApp.</p>
+
+                            <form id="contactForm" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Lengkap</label>
+                                    <input type="text" id="formName" required placeholder="Masukkan nama Anda" class="w-full px-4 py-3 rounded-xl text-xs sm:text-sm border border-gray-200 focus:outline-none focus:border-brandRed focus:ring-1 focus:ring-brandRed">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nomor WhatsApp / Email</label>
+                                    <input type="text" id="formContact" required placeholder="Contoh: 08123456789" class="w-full px-4 py-3 rounded-xl text-xs sm:text-sm border border-gray-200 focus:outline-none focus:border-brandRed focus:ring-1 focus:ring-brandRed">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Isi Pesan / Pertanyaan</label>
+                                    <textarea id="formMessage" rows="4" required placeholder="Tuliskan pesan Anda di sini..." class="w-full px-4 py-3 rounded-xl text-xs sm:text-sm border border-gray-200 focus:outline-none focus:border-brandRed focus:ring-1 focus:ring-brandRed"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-3.5 px-6 rounded-xl font-bold text-xs text-white uppercase tracking-wider red-gradient-bg shadow-md hover:opacity-95 transition-opacity flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    <span>Kirimkan Pesan Sekarang</span>
+                                </button>
+                            </form>
+
+                            <div id="formSuccessMsg" class="hidden mt-4 p-4 rounded-xl bg-green-100 text-green-800 text-xs font-medium text-center">
+                                Terimakasih! Pesan Anda telah disiapkan untuk dikirim melalui WhatsApp.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white pt-12 pb-8 border-t-4 border-brandGold relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-gray-800 pb-8">
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full gold-gradient-bg flex items-center justify-center text-gray-900 font-bold text-lg">
+                        FA
+                    </div>
+                    <div>
+                        <span class="font-bold text-base block">FITRIA ANIDWITA, S.Pd.</span>
+                        <span class="text-xs text-gray-400">Guru Kelas SD Negeri Mojomanis 2, Ngawi</span>
+                    </div>
+                </div>
+
+                <!-- Footer Social Links -->
+                <div class="flex items-center gap-4 text-gray-400">
+                    <a href="https://youtube.com/@fitriaanidwita?si=H4a-YoPLXq8ntXrD" target="_blank" class="hover:text-red-500 transition-colors"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    <a href="https://www.instagram.com/vitafitriand?xtok=MWZpMWV5anc2NnRtYg%3D%3D&utm_source=qr" target="_blank" class="hover:text-pink-500 transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                    <a href="https://www.tiktok.com/@bu.fitanidwita" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-tiktok text-xl"></i></a>
+                    <a href="https://wa.me/6281332157553" target="_blank" class="hover:text-green-500 transition-colors"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                </div>
+
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+                <p>&copy; 2026 Fitria Anidwita, S.Pd. All Rights Reserved.</p>
+                <p class="italic">"Mendidik dengan Hati, Membentuk Generasi Masa Depan Digital"</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Floating Audio Control Widget (Bottom Right) -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2">
+        <button id="audioToggleBtn" class="gold-gradient-bg text-gray-900 px-4 py-3 rounded-full shadow-2xl flex items-center gap-3 border-2 border-white hover:scale-105 transition-transform focus:outline-none">
+            <!-- Animated Equalizer Bars -->
+            <div id="eqContainer" class="flex items-end gap-0.5 h-5 paused">
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+            </div>
+            <span id="audioStatusText" class="font-extrabold text-xs tracking-wider uppercase">Musik: Off</span>
+            <i id="audioIcon" class="fa-solid fa-volume-xmark text-sm"></i>
+        </button>
+    </div>
+
+
+    <!-- Back to Top Button -->
+    <a href="#profil" id="backToTopBtn" class="fixed bottom-6 left-6 z-40 w-11 h-11 rounded-full red-gradient-bg text-white flex items-center justify-center shadow-lg opacity-0 pointer-events-none transition-all duration-300 hover:scale-110">
+        <i class="fa-solid fa-arrow-up"></i>
+    </a>
+
+
+    <!-- JavaScript Libraries & Interaction Scripts -->
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        // --- 1. Background Bubbles Generator ---
+        function createBubbles() {
+            const container = document.getElementById('bubblesContainer');
+            const bubbleCount = 18;
+
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                const size = Math.random() * 40 + 15; // 15px - 55px
+                const leftPos = Math.random() * 100; // 0% - 100%
+                const delay = Math.random() * 12; // 0s - 12s
+                const duration = Math.random() * 10 + 12; // 12s - 22s
+
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${leftPos}%`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.animationDuration = `${duration}s`;
+
+                container.appendChild(bubble);
+            }
+        }
+
+        // --- 2. YouTube Audio Player API Logic ---
+        let player;
+        let isPlaying = false;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: 'wQXbjVq4aWM',
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'wQXbjVq4aWM'
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Attempt auto play on first user interaction if blocked by browser policy
+            document.body.addEventListener('click', autoStartAudioOnce, { once: true });
+        }
+
+        function autoStartAudioOnce() {
+            if (player && !isPlaying) {
+                player.playVideo();
+                player.setVolume(40);
+                isPlaying = true;
+                updateAudioUI(true);
+            }
+        }
+
+        const audioToggleBtn = document.getElementById('audioToggleBtn');
+        const eqContainer = document.getElementById('eqContainer');
+        const audioStatusText = document.getElementById('audioStatusText');
+        const audioIcon = document.getElementById('audioIcon');
+
+        function updateAudioUI(playing) {
+            if (playing) {
+                eqContainer.classList.remove('paused');
+                audioStatusText.textContent = 'Musik: On';
+                audioIcon.className = 'fa-solid fa-volume-high text-sm';
+            } else {
+                eqContainer.classList.add('paused');
+                audioStatusText.textContent = 'Musik: Off';
+                audioIcon.className = 'fa-solid fa-volume-xmark text-sm';
+            }
+        }
+
+        audioToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!player) return;
+
+            if (isPlaying) {
+                player.pauseVideo();
+                isPlaying = false;
+                updateAudioUI(false);
+            } else {
+                player.playVideo();
+                player.setVolume(40);
+                isPlaying = true;
+                updateAudioUI(true);
+            }
+        });
+
+
+        // --- 3. Mobile Navigation Menu Toggle ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+
+        // --- 4. Back To Top Button Visibility ---
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+
+        // --- 5. Interactive Contact Form Handler ---
+        const contactForm = document.getElementById('contactForm');
+        const formSuccessMsg = document.getElementById('formSuccessMsg');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('formName').value;
+            const contact = document.getElementById('formContact').value;
+            const message = document.getElementById('formMessage').value;
+
+            // Formulate WhatsApp Message Query
+            const waMessage = `Halo Bu Fitria, nama saya ${encodeURIComponent(name)} (${encodeURIComponent(contact)}). %0A%0APesan saya: %0A${encodeURIComponent(message)}`;
+            const waUrl = `https://wa.me/6281332157553?text=${waMessage}`;
+
+            formSuccessMsg.classList.remove('hidden');
+            
+            setTimeout(() => {
+                window.open(waUrl, '_blank');
+            }, 800);
+        });
+
+
+        // Initialize Background Animations on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            createBubbles();
+        });
+    </script>
+</body>
+</html>
